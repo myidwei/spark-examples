@@ -21,7 +21,7 @@ sip = sf.read().replace("-","")
 mf.close()
 sf.close()
 
-os.system("apt-get update -y && apt-get install python -y && apt-get install -y default-jdk && apt-get install -y curl && apt-get install -y maven && apt-get install -y python-pip && pip install pyhdfs")
+os.system("apt-get update -y && apt-get install python -y && apt-get install -y default-jdk && apt-get install -y curl && apt-get install -y maven && apt-get install -y python-pip && pip install pyhdfs && pip install numpy pyspark")
 
 #clear first
 os.system("rm -rf /usr/local/hadoop-2.9.2/ && unlink /usr/local/hadoop && rm -rf /data/hadoop/ && rm -rf /usr/local/spark-2.4.0-bin-hadoop2.7/ && unlink /usr/local/spark && rm -rf /usr/local/scala-2.11.12 && unlink /usr/local/scala")
@@ -173,7 +173,7 @@ writeHadoopConfigFile("slaves",slaves)
 envConfig = """export JAVA_HOME=/usr/lib/jvm/default-java/
 export SCALA_HOME=/usr/local/scala
 export HADOOP_HOME=/usr/local/hadoop
-export HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
 export SPARK_MASTER_IP=%(mip)s
 export SPARK_MASTER_HOST=%(mip)s
 export SPARK_WORKER_MEMORY=1g
@@ -185,8 +185,6 @@ export SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoop classpath)
 writeSparkConfigFile("spark-env.sh",envConfig)
 slaves = sip
 writeSparkConfigFile("slaves",slaves)
-
-
 
 #format hdfs
 os.system("/usr/local/hadoop/bin/hdfs namenode -format")
