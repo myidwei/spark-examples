@@ -14,8 +14,8 @@ def writeSparkConfigFile(name,xml):
 
 
 
-mf = open("master","r")
-sf = open("slaves","r")
+mf = open("manager","r")
+sf = open("workers","r")
 mip = mf.read().strip()
 sip = sf.read().replace("-","")
 mf.close()
@@ -38,7 +38,7 @@ os.system("sed -i '/export JAVA_HOME/s/${JAVA_HOME}/\/usr\/lib\/jvm\/default-jav
 
 
 print("Downloading and install  Scala2.11.12")
-os.system("curl https://downloads.lightbend.com/scala/2.11.12/scala-2.11.12.tgz > /scala-2.11.12.tgz && tar -xzf /scala-2.11.12.tgz -C /usr/local/ && ln -s /usr/local/scala-2.11.12 /usr/local/scala/")
+os.system("curl https://downloads.lightbend.com/scala/2.11.12/scala-2.11.12.tgz > /scala-2.11.12.tgz && tar -xzf /scala-2.11.12.tgz -C /usr/local/ && ln -s /usr/local/scala-2.11.12 /usr/local/scala")
 print("Finished install scala-2.11.12")
 
 
@@ -165,10 +165,8 @@ yarnSiteXml = """<?xml version="1.0" encoding="UTF-8"?>
 """ % dict(mip=mip)
 writeHadoopConfigFile("yarn-site.xml",yarnSiteXml)
 
-master = mip
-writeHadoopConfigFile("master",master)
-slaves = sip
-writeHadoopConfigFile("slaves",slaves)
+writeHadoopConfigFile("master",mip)
+writeHadoopConfigFile("slaves",sip)
 
 envConfig = """export JAVA_HOME=/usr/lib/jvm/default-java/
 export SCALA_HOME=/usr/local/scala
@@ -183,8 +181,7 @@ export SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoop classpath)
 """ % dict(mip=mip)
 
 writeSparkConfigFile("spark-env.sh",envConfig)
-slaves = sip
-writeSparkConfigFile("slaves",slaves)
+writeSparkConfigFile("slaves",sip)
 
 #format hdfs
 os.system("/usr/local/hadoop/bin/hdfs namenode -format")

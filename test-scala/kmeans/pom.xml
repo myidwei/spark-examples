@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>spark-test</groupId>
-    <artifactId>WordCount</artifactId>
+    <artifactId>KMeans</artifactId>
     <version>1.0-SNAPSHOT</version>
 <properties>
     <scala.version>2.11.12</scala.version>
@@ -12,9 +12,15 @@
 <dependencies>
     <dependency>
         <groupId>org.apache.spark</groupId>
-        <artifactId>spark-core_2.11</artifactId>
+        <artifactId>spark-core_2.12</artifactId>
         <version>${spark.version}</version>
     </dependency>
+<dependency>
+    <groupId>org.apache.spark</groupId>
+    <artifactId>spark-sql_2.12</artifactId>
+    <version>2.4.0</version>
+</dependency>
+
     <dependency>
         <groupId>org.scala-lang</groupId>
         <artifactId>scala-library</artifactId>
@@ -25,6 +31,13 @@
         <artifactId>hadoop-client</artifactId>
         <version>${hadoop.version}</version>
     </dependency>
+<dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-mllib_2.12</artifactId>
+            <version>2.4.0</version>
+            <scope>provided</scope>
+        </dependency>
+
 </dependencies>
 
 <build>
