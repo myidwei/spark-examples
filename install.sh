@@ -15,5 +15,4 @@ do
 done
 
 manager=$(cat /spark-install/manager)
-find ./ -name "*.sh" -exec grep "node-0" {} \;-exec sed -i 's/node-0/$manager/g' {} \;
-
+echo "export SPARK_MASTER=$manager" > env.sh
